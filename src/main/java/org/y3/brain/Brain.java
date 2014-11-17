@@ -42,4 +42,9 @@ public class Brain extends IApplication {
     public void prepare() {
     }
 
+    @Override
+    public String getApplicationName() {
+        return "Brain";
+    }
+
 }
