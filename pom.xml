@@ -9,35 +9,21 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.2</version>
-                </plugin>
-                <plugin>
                     <groupId>com.google.code.maven-replacer-plugin</groupId>
                     <artifactId>replacer</artifactId>
                     <version>1.5.3</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.5</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <properties>
-        <brain.final.version>2014.1.0.0</brain.final.version>
+        <project.final.version>2014.1.0.0</project.final.version>
+        <project.application.name>Brain</project.application.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>net.java.dev.designgridlayout</groupId>
-            <artifactId>designgridlayout</artifactId>
-            <version>1.11</version>
-        </dependency>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
@@ -48,11 +34,6 @@
             <artifactId>junit</artifactId>
             <version>4.10</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -218,8 +199,8 @@
                                 <configuration>
                                     <dontwrapjar>false</dontwrapjar>
                                     <headerType>gui</headerType>
-                                    <outfile>target/deploy/Brain.exe</outfile>
-                                    <jar>target/rip_tools-${project.version}.jar</jar>
+                                    <outfile>target/deploy/${project.application.name}.exe</outfile>
+                                    <jar>target/${project.name}-${project.version}.jar</jar>
                                     <errtitle>Launcher</errtitle>
                                     <customProcName>true</customProcName>
                                     <classpath>
@@ -239,15 +220,15 @@
                                         <timeoutErr>true</timeoutErr>  
                                     </splash>
                                     <versionInfo>
-                                        <fileVersion>${riptools.final.version}</fileVersion>
+                                        <fileVersion>${project.final.version}</fileVersion>
                                         <txtFileVersion>${project.version}</txtFileVersion>
                                         <fileDescription>The.Brain</fileDescription>
                                         <copyright>Christian Rybotycky</copyright>
-                                        <productVersion>${riptools.final.version}</productVersion>
+                                        <productVersion>${project.final.version}</productVersion>
                                         <txtProductVersion>${project.version}</txtProductVersion>
-                                        <productName>Brain</productName>
+                                        <productName>${project.application.name}</productName>
                                         <internalName>brain</internalName>
-                                        <originalFilename>Brain.exe</originalFilename>
+                                        <originalFilename>${project.application.name}.exe</originalFilename>
                                     </versionInfo>
                                 </configuration>
                             </execution>
