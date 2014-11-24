@@ -1,5 +1,6 @@
 package org.y3.brain;
 
+import org.y3.brain.database.BrainStorm;
 import org.y3.commons.application.IApplication;
 
 /** 
@@ -11,11 +12,21 @@ import org.y3.commons.application.IApplication;
  */
 public class Brain extends IApplication {
     
+    public static BrainStorm brainStorm;
+    private final String brainStromLocation = System.getProperty("user.home") + "brainStorm.brain";
+    
     public Brain() {
+        super();
     }
     
     @Override
     public void run() {
+        brainStorm = new BrainStorm();
+        try {
+            brainStorm.connect(brainStromLocation);
+        } catch (Exception ex) {
+            LOG().error(ex);
+        }
     }
     
     public static void main(String args[]) {
@@ -45,6 +56,13 @@ public class Brain extends IApplication {
     @Override
     public String getApplicationName() {
         return "Brain";
+    }
+
+    @Override
+    public void beforeShutDown() {
+        if (brainStorm != null && brainStorm.isConnected()) {
+            brainStorm.disconnect();
+        }
     }
 
 }
