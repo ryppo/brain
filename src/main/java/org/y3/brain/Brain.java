@@ -13,7 +13,7 @@ import org.y3.commons.application.IApplication;
 public class Brain extends IApplication {
     
     public static BrainStorm brainStorm;
-    private final String brainStromLocation = System.getProperty("user.home") + "brainStorm.brain";
+    private final String brainStromLocation = System.getProperty("user.home") + "/brainStorm.brain";
     
     public Brain() {
         super();
