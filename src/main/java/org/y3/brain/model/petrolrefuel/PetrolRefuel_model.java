@@ -4,29 +4,72 @@ import java.util.Date;
 import org.y3.commons.model.IModel;
 
 /** 
- * <p>Title: org.y3.brain.model.petrolconsumption - PetrolRefuelModel</p>
+ * <p>Title: org.y3.brain.model.petrolconsumption - PetrolRefuel_model</p>
  * <p>Description: </p>
  * <p>Copyright: 2014</p>
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
  */
-public class PetrolRefuelModel extends IModel {
+public class PetrolRefuel_model extends IModel {
     
+    //identity
     private int id;
-    private String carName;
-    private String carOwner;
+    private String FP;
+    //fields
     private Date refuelDate;
     private double pricePerLiter;
-    private String currency;
     private double refueledLiters;
     private double tripDistanceInKilometers;
     private double absolutDistanceInKilometers;
     private double costsForRefuel;
     private double consumedLitersPer100Km;
     private double costsPerKilometer;
-    private String petrolStation;
-    private String refilledPetrolType;
     private String comment;
+    //relations
+    private String carFP;
+    private String refuelerPersonFP;
+    private String currencyFP;
+    private String tireTypeFP;
+
+    public String getTireTypeFP() {
+        return tireTypeFP;
+    }
+
+    public void setTireTypeFP(String tireTypeFP) {
+        this.tireTypeFP = tireTypeFP;
+    }
+    
+    public String getCurrencyFP() {
+        return currencyFP;
+    }
+
+    public void setCurrencyFP(String currencyFP) {
+        this.currencyFP = currencyFP;
+    }
+
+    public String getFP() {
+        return FP;
+    }
+
+    public void setFP(String FP) {
+        this.FP = FP;
+    }
+
+    public String getCarFP() {
+        return carFP;
+    }
+
+    public void setCarFP(String carFP) {
+        this.carFP = carFP;
+    }
+
+    public String getRefuelerPersonFP() {
+        return refuelerPersonFP;
+    }
+
+    public void setRefuelerPersonFP(String refuelerPersonFP) {
+        this.refuelerPersonFP = refuelerPersonFP;
+    }
 
     public int getId() {
         return id;
@@ -34,22 +77,6 @@ public class PetrolRefuelModel extends IModel {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCarName() {
-        return carName;
-    }
-
-    public void setCarName(String carName) {
-        this.carName = carName;
-    }
-
-    public String getCarOwner() {
-        return carOwner;
-    }
-
-    public void setCarOwner(String carOwner) {
-        this.carOwner = carOwner;
     }
 
     public Date getRefuelDate() {
@@ -66,14 +93,6 @@ public class PetrolRefuelModel extends IModel {
 
     public void setPricePerLiter(double pricePerLiter) {
         this.pricePerLiter = pricePerLiter;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public double getRefueledLiters() {
@@ -122,22 +141,6 @@ public class PetrolRefuelModel extends IModel {
 
     public void setCostsPerKilometer(double costsPerKilometer) {
         this.costsPerKilometer = costsPerKilometer;
-    }
-
-    public String getPetrolStation() {
-        return petrolStation;
-    }
-
-    public void setPetrolStation(String petrolStation) {
-        this.petrolStation = petrolStation;
-    }
-
-    public String getRefilledPetrolType() {
-        return refilledPetrolType;
-    }
-
-    public void setRefilledPetrolType(String refilledPetrolType) {
-        this.refilledPetrolType = refilledPetrolType;
     }
 
     public String getComment() {
