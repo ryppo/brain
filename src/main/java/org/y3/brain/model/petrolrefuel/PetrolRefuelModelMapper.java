@@ -1,7 +1,9 @@
 package org.y3.brain.model.petrolrefuel;
 
+import java.sql.ResultSet;
+import org.y3.commons.model.IModel;
 import org.y3.commons.model.IModelFilter;
-import org.y3.commons.model.IModelMapper;
+import org.y3.commons.model.ISqliteJdbcModelMapper;
 
 /**
  * <p>Title: org.y3.brain.model.petrolrefuel - PetrolRefuelModelMapper</p>
@@ -10,7 +12,7 @@ import org.y3.commons.model.IModelMapper;
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
  */
-public class PetrolRefuelModelMapper extends IModelMapper {
+public class PetrolRefuelModelMapper implements ISqliteJdbcModelMapper {
 
     @Override
     public String getModelSelectSql(IModelFilter filter) {
@@ -20,10 +22,6 @@ public class PetrolRefuelModelMapper extends IModelMapper {
         return null;
     }
     
-    public String getModelSelectSql(PetrolRefuelModelFilter filter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public String getModelsSelectSql(IModelFilter filter) {
         if (filter instanceof PetrolRefuelModelFilter) {
@@ -37,8 +35,18 @@ public class PetrolRefuelModelMapper extends IModelMapper {
     }
 
     @Override
-    public PetrolRefuelModel mapSqliteStatementToModel(com.almworks.sqlite4java.SQLiteStatement stmt) {
+    public IModel map(ResultSet dbResult) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PetrolRefuelModelList createModelList() {
+        return new PetrolRefuelModelList();
+    }
+
+    @Override
+    public PetrolRefuelModel createModel() {
+        return new PetrolRefuelModel();
     }
 
 }

@@ -1,6 +1,6 @@
 package org.y3.brain.database;
 
-import org.y3.commons.database.SqlLiteDatabase;
+import org.y3.commons.database.SqliteJdbcDatabase;
 
 /**
  * <p>Title: org.y3.brain.database - BrainStorm</p>
@@ -9,7 +9,7 @@ import org.y3.commons.database.SqlLiteDatabase;
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
  */
-public class BrainStorm extends SqlLiteDatabase {
+public class BrainStorm extends SqliteJdbcDatabase {
     
     
 

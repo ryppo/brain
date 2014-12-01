@@ -1,5 +1,6 @@
 package org.y3.brain;
 
+import java.sql.SQLException;
 import org.y3.brain.database.BrainStorm;
 import org.y3.commons.application.IApplication;
 
@@ -60,8 +61,12 @@ public class Brain extends IApplication {
 
     @Override
     public void beforeShutDown() {
-        if (brainStorm != null && brainStorm.isConnected()) {
-            brainStorm.disconnect();
+        try {
+            if (brainStorm != null && brainStorm.isConnected()) {
+                brainStorm.disconnect();
+            }
+        } catch (SQLException ex) {
+            LOG().error(ex);
         }
     }
 
