@@ -1,10 +1,10 @@
 package org.y3.brain.model.petrolrefuel;
 
-import org.y3.brain.database.car.Car_model;
-import org.y3.brain.database.currency.Currency_model;
-import org.y3.brain.database.person.Person_model;
-import org.y3.brain.database.petrolstation.PetrolStation_model;
-import org.y3.brain.database.petroltype.PetrolType_model;
+import org.y3.brain.model.car.Car_model;
+import org.y3.brain.model.currency.Currency_model;
+import org.y3.brain.model.person.Person_model;
+import org.y3.brain.model.petrolstation.PetrolStation_model;
+import org.y3.brain.model.petroltype.PetrolType_model;
 import org.y3.brain.database.tire.TireType_model;
 
 /** 

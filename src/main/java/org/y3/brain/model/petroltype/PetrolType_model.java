@@ -1,21 +1,20 @@
-package org.y3.brain.database.currency;
+package org.y3.brain.model.petroltype;
 
 import org.y3.commons.model.IModel;
 
 /** 
- * <p>Title: org.y3.brain.database.currency - Currency_model</p>
+ * <p>Title: org.y3.brain.database.petroltype - PetrolType_model</p>
  * <p>Description: </p>
  * <p>Copyright: 2014</p>
- * <p>Company: SE Bordnetze GmbH</p>
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
 */
-public class Currency_model extends IModel {
+public class PetrolType_model extends IModel {
     
     private int id;
     private String FP;
     private String name;
-    private String abbreviation;
+    private double qualityInOctan;
 
     public int getId() {
         return id;
@@ -41,12 +40,12 @@ public class Currency_model extends IModel {
         this.name = name;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public double getQualityInOctan() {
+        return qualityInOctan;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
+    public void setQualityInOctan(double qualityInOctan) {
+        this.qualityInOctan = qualityInOctan;
     }
 
 }

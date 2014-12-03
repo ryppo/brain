@@ -1,6 +1,7 @@
-package org.y3.brain.database.car;
+package org.y3.brain.model.car;
 
-import org.y3.brain.database.person.Person_model;
+import org.y3.brain.model.car.Car_model;
+import org.y3.brain.model.person.Person_model;
 
 /** 
  * <p>Title: org.y3.brain.database.car - Car_modelRich</p>

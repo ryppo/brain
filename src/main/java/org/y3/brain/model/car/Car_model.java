@@ -1,20 +1,28 @@
-package org.y3.brain.database.petroltype;
+package org.y3.brain.model.car;
 
 import org.y3.commons.model.IModel;
 
 /** 
- * <p>Title: org.y3.brain.database.petroltype - PetrolType_model</p>
+ * <p>Title: org.y3.brain.database.car - Car_model</p>
  * <p>Description: </p>
  * <p>Copyright: 2014</p>
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
 */
-public class PetrolType_model extends IModel {
+public class Car_model extends IModel {
     
     private int id;
     private String FP;
     private String name;
-    private double qualityInOctan;
+    private String ownerPersonFP;
+
+    public String getOwnerPersonFP() {
+        return ownerPersonFP;
+    }
+
+    public void setOwnerPersonFP(String ownerPersonFP) {
+        this.ownerPersonFP = ownerPersonFP;
+    }
 
     public int getId() {
         return id;
@@ -38,14 +46,6 @@ public class PetrolType_model extends IModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getQualityInOctan() {
-        return qualityInOctan;
-    }
-
-    public void setQualityInOctan(double qualityInOctan) {
-        this.qualityInOctan = qualityInOctan;
     }
 
 }

@@ -1,4 +1,4 @@
-package org.y3.brain.database.person;
+package org.y3.brain.model.person;
 
 import org.y3.commons.model.IModel;
 

@@ -1,4 +1,4 @@
-package org.y3.brain.database.petrolstation;
+package org.y3.brain.model.petrolstation;
 
 import org.y3.commons.model.IModel;
 

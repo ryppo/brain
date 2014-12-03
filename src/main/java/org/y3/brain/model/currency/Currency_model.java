@@ -1,28 +1,21 @@
-package org.y3.brain.database.car;
+package org.y3.brain.model.currency;
 
 import org.y3.commons.model.IModel;
 
 /** 
- * <p>Title: org.y3.brain.database.car - Car_model</p>
+ * <p>Title: org.y3.brain.database.currency - Currency_model</p>
  * <p>Description: </p>
  * <p>Copyright: 2014</p>
+ * <p>Company: SE Bordnetze GmbH</p>
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
 */
-public class Car_model extends IModel {
+public class Currency_model extends IModel {
     
     private int id;
     private String FP;
     private String name;
-    private String ownerPersonFP;
-
-    public String getOwnerPersonFP() {
-        return ownerPersonFP;
-    }
-
-    public void setOwnerPersonFP(String ownerPersonFP) {
-        this.ownerPersonFP = ownerPersonFP;
-    }
+    private String abbreviation;
 
     public int getId() {
         return id;
@@ -46,6 +39,14 @@ public class Car_model extends IModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
 }
