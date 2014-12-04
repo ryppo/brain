@@ -1,4 +1,4 @@
-package org.y3.brain.database.tire;
+package org.y3.brain.model.tire;
 
 import org.y3.commons.model.IModel;
 
