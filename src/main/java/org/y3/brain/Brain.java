@@ -2,7 +2,9 @@ package org.y3.brain;
 
 import java.sql.SQLException;
 import org.y3.brain.database.BrainStorm;
+import org.y3.brain.model.petrolrefuel.PetrolRefuelModel_mapper;
 import org.y3.commons.application.IApplication;
+import org.y3.commons.model.ISqliteJdbcModelMapper;
 
 /** 
  * <p>Title: org.y3.brain - Brain</p>
@@ -26,8 +28,11 @@ public class Brain extends IApplication {
         try {
             brainStorm.connect(brainStromLocation);
         } catch (Exception ex) {
-            LOG().error(ex);
+            LOG().error(ex.getMessage(), ex);
         }
+        brainStorm.setModelMapper(new ISqliteJdbcModelMapper[]{
+            new PetrolRefuelModel_mapper()
+        });
     }
     
     public static void main(String args[]) {
