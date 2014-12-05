@@ -2,8 +2,12 @@ package org.y3.brain.model.petrolrefuel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.apache.commons.lang3.StringUtils;
 import org.y3.commons.model.IModel;
 import org.y3.commons.model.IModelFilter;
+import org.y3.commons.model.IModelList;
 import org.y3.commons.model.IModelMapper;
 import org.y3.commons.model.ISqliteJdbcModelMapper;
 
@@ -68,6 +72,27 @@ public class PetrolRefuelModel_mapper implements ISqliteJdbcModelMapper {
         return sql;
     }
 
+    @Override
+    public TableModel map(IModelList modelList) {
+        String[] columnNames = new String[]{
+            fields.id.name(), fields.fingerprint.name()
+        };
+        Object[][] content = null;
+        if (modelList != null) {
+            content = new Object[modelList.size()][columnNames.length];
+            for (int i = 0; i < modelList.size(); i++) {
+                IModel model = modelList.get(i);
+                if (model instanceof PetrolRefuel_model) {
+                    PetrolRefuel_model pm = (PetrolRefuel_model) model;
+                    int col = 0;
+                    content[i][col++] = pm.getId();
+                    content[i][col++] = pm.getFP();
+                }
+            }
+        }
+        return new DefaultTableModel(content, columnNames);
+    }
+
     public enum fields {
         id, fingerprint, refuelDate, pricePerLiter, refuledLiters,
         tripDistanceInKm, absolutDistanceInKm, costsForRefuel,
@@ -97,16 +122,16 @@ public class PetrolRefuelModel_mapper implements ISqliteJdbcModelMapper {
     
     @Override
     public String getModelSelectSql(IModelFilter filter) {
-        if (filter instanceof PetrolRefuel_modelFilter) {
+        if (filter == null || filter instanceof PetrolRefuel_modelFilter) {
             return getModelSelectSql((PetrolRefuel_modelFilter) filter);
         }
-        return "SELECT * FROM " + getDatabaseTableName() + sqlWhere(filter);
+        return "SELECT * FROM " + getDatabaseTableName() + StringUtils.defaultString(sqlWhere(filter));
     }
     
     @Override
     public String getModelsSelectSql(IModelFilter filter) {
-        if (filter instanceof PetrolRefuel_modelFilter) {
-            return "SELECT * FROM " + getDatabaseTableName() + sqlWhere(filter);
+        if (filter == null || filter instanceof PetrolRefuel_modelFilter) {
+            return "SELECT * FROM " + getDatabaseTableName() + StringUtils.defaultString(sqlWhere(filter));
         }
         return null;
     }

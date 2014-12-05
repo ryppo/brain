@@ -1,5 +1,6 @@
 package org.y3.brain.database;
 
+import org.y3.brain.model.petrolrefuel.PetrolRefuelModel_mapper;
 import org.y3.commons.database.SqliteJdbcDatabase;
 import org.y3.commons.model.ISqliteJdbcModelMapper;
 
@@ -12,16 +13,24 @@ import org.y3.commons.model.ISqliteJdbcModelMapper;
  */
 public class BrainStorm extends SqliteJdbcDatabase {
     
-    private ISqliteJdbcModelMapper[] mapper;
+    private ISqliteJdbcModelMapper[] allMapper;
+    private final PetrolRefuelModel_mapper petrolRefuelModel_mapper;
     
     public BrainStorm() {
-        
+        petrolRefuelModel_mapper = new PetrolRefuelModel_mapper();
+        allMapper = new ISqliteJdbcModelMapper[]{
+            petrolRefuelModel_mapper
+        };
     }
     
-    public void setModelMapper(ISqliteJdbcModelMapper[] _mapper) {
-        mapper = _mapper;
-        if (mapper != null && mapper.length > 0) {
-            for (ISqliteJdbcModelMapper mapper : _mapper) {
+    public PetrolRefuelModel_mapper getPetrolRefuelModelMapper() {
+        return petrolRefuelModel_mapper;
+    }
+
+    @Override
+    public void executeAfterConnect() {
+        if (allMapper != null && allMapper.length > 0) {
+            for (ISqliteJdbcModelMapper mapper : allMapper) {
                 if (mapper != null) {
                     try {
                         createMissingModelTable(mapper);

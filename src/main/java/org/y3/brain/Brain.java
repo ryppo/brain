@@ -2,9 +2,10 @@ package org.y3.brain;
 
 import java.sql.SQLException;
 import org.y3.brain.database.BrainStorm;
-import org.y3.brain.model.petrolrefuel.PetrolRefuelModel_mapper;
+import org.y3.brain.view.BrainFrame;
+import org.y3.brain.view.IModelView;
+import org.y3.brain.view.petrolrefuel.PetrolRefuel_view;
 import org.y3.commons.application.IApplication;
-import org.y3.commons.model.ISqliteJdbcModelMapper;
 
 /** 
  * <p>Title: org.y3.brain - Brain</p>
@@ -16,7 +17,7 @@ import org.y3.commons.model.ISqliteJdbcModelMapper;
 public class Brain extends IApplication {
     
     public static BrainStorm brainStorm;
-    private final String brainStromLocation = System.getProperty("user.home") + "/brainStorm.brain";
+    public BrainFrame brainFrame;
     
     public Brain() {
         super();
@@ -24,15 +25,7 @@ public class Brain extends IApplication {
     
     @Override
     public void run() {
-        brainStorm = new BrainStorm();
-        try {
-            brainStorm.connect(brainStromLocation);
-        } catch (Exception ex) {
-            LOG().error(ex.getMessage(), ex);
-        }
-        brainStorm.setModelMapper(new ISqliteJdbcModelMapper[]{
-            new PetrolRefuelModel_mapper()
-        });
+        brainFrame.setVisible(true);
     }
     
     public static void main(String args[]) {
@@ -57,6 +50,25 @@ public class Brain extends IApplication {
 
     @Override
     public void prepare() {
+        //model
+        brainStorm = new BrainStorm();
+        try {
+            String brainStormLocation = System.getProperty("user.home") + "/brainStorm.brain";
+            String lastUsedBrainStrom = UP().getProperty("brainstormlocation");
+            if (lastUsedBrainStrom != null && lastUsedBrainStrom.length() > 0) {
+                brainStormLocation = lastUsedBrainStrom;
+            }
+            LOG().debug("brainStormLocation: " + brainStormLocation);
+            brainStorm.connect(brainStormLocation);
+        } catch (Exception ex) {
+            LOG().error(ex.getMessage(), ex);
+        }
+        //view
+        IModelView[] modelViews = new IModelView[]{
+            new PetrolRefuel_view()
+        };
+        brainFrame = new BrainFrame(RB(), UP(), modelViews);
+        brainFrame.addWindowListener(getShutDownListener());
     }
 
     @Override
@@ -73,6 +85,7 @@ public class Brain extends IApplication {
         } catch (SQLException ex) {
             LOG().error(ex);
         }
+        brainFrame.saveProperties();
     }
 
 }
