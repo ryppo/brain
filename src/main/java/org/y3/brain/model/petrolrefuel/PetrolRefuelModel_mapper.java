@@ -1,7 +1,14 @@
 package org.y3.brain.model.petrolrefuel;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.apache.commons.lang3.StringUtils;
+import org.y3.commons.model.IModel;
 import org.y3.commons.model.IModelFilter;
+import org.y3.commons.model.IModelList;
+import org.y3.commons.model.IModelMapper;
 import org.y3.commons.model.ISqliteJdbcModelMapper;
 
 /**
@@ -13,80 +20,85 @@ import org.y3.commons.model.ISqliteJdbcModelMapper;
  */
 public class PetrolRefuelModel_mapper implements ISqliteJdbcModelMapper {
     
-    //////TO BE MOVED TO Y3-COMMONS
-    public final static String FILTER_COMPARATOR_EQUALS = " = ";
-    public final static String FILTER_COMPARATOR_LIKE = " LIKE ";
-    public final static String FILTER_COMPARATOR_NOT = " NOT ";
-    public final static String FILTER_COMPARATOR_SMALLER_THAN = " <= ";
-    public final static String FILTER_COMPARATOR_GREATER_THAN = " >= ";
-    public final static String FILTER_COMPARATOR_EXCLUDE = " <> ";
-    
-    //public String sqlWhere(IModelFilter _filter);
-    
-    public static  String addExcludeNotEmptyStringWhere(String where, String key) {
-        if (where != null && where.length() > 0) {
-            where += " AND ";
-        } else {
-            where = " WHERE ";
-        }
-        where += key + FILTER_COMPARATOR_EXCLUDE + "''";
-        return where;
+    @Override
+    public String getDatabaseTableName() {
+        return "PetrolRefuel";
     }
-    
-    public static String addNotNullStringWhere(String where, String key, String comparator, String value) {
-        if (value != null && value.length() > 0) {
-            if (where != null && where.length() > 0) {
-                where += " AND ";
-            } else {
-                where = " WHERE ";
-            }
-            where += key + comparator + "'" + value + "'";
-        }
-        return where;
+
+    @Override
+    public String getCreateDatabaseTableSql() {
+        return "CREATE TABLE '" + getDatabaseTableName() + "' ("
+	+ fields.id.name() + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+	+ fields.fingerprint.name() + " TEXT NOT NULL UNIQUE,"
+	+ fields.refuelDate.name() + " TEXT,"
+	+ fields.pricePerLiter.name() + " REAL,"
+	+ fields.refuledLiters.name() + " REAL,"
+	+ fields.tripDistanceInKm.name() + " REAL,"
+	+ fields.absolutDistanceInKm.name() + " REAL,"
+	+ fields.costsForRefuel.name() + " REAL,"
+	+ fields.cosumedLitersPer100Km.name() + " REAL,"
+	+ fields.costsPerKilometer.name() + " REAL,"
+	+ fields.petrolStation.name() + " NUMERIC,"
+	+ fields.comment.name() + " TEXT,"
+	+ fields.refilledPetrolTypeFingerprint.name() + " TEXT,"
+	+ fields.usedTireTypeFingerprint.name() + " TEXT,"
+	+ fields.carFingerprint.name() + " TEXT,"
+	+ fields.refuelerPersonFingerprint.name() + " TEXT,"
+	+ fields.currencyFingerPrint.name() + " TEXT);";
     }
-    
-    public static String addNotNullIntegerWhere(String where, String key, String comparator, int value) {
-        if (where != null && where.length() > 0) {
-            where += " AND ";
-        } else {
-            where = " WHERE ";
+
+    @Override
+    public String getModelUpdateSql(IModel _model) {
+        String sql = null;
+        if (_model instanceof PetrolRefuel_model) {
+            PetrolRefuel_model model = (PetrolRefuel_model) _model;
+            sql = "UPDATE " + getDatabaseTableName() + " SET "
+                    + fields.fingerprint.name() + "=" + ISqliteJdbcModelMapper.sqlString(model.getFP())
+                    +  " WHERE " + fields.fingerprint + "='" + model.getFP() + "'";
         }
-        where += key + comparator + "'" + value + "";
-        return where;
+        return sql;
     }
-    
-    public static String addNotNullStringWhere(String where, String key, String comparator, String[] values) {
-        if (values != null && values.length > 0) {
-            String multi = null;
-            if (where != null && where.length() > 0) {
-                where += " AND ";
-            } else {
-                where = " WHERE ";
-            }
-            for (String value : values) {
-                if (multi == null) {
-                    multi = "(";
-                } else {
-                    multi += " OR ";
+
+    @Override
+    public String getModelInsertSql(IModel _model) {
+        String sql = null;
+        if (_model instanceof PetrolRefuel_model) {
+            PetrolRefuel_model model = (PetrolRefuel_model) _model;
+            sql = "INSERT INTO " + getDatabaseTableName() + " ("
+                    + fields.fingerprint.name() + ") VALUES ("
+                    + ISqliteJdbcModelMapper.sqlString(model.getFP())
+                    + ")";
+        }
+        return sql;
+    }
+
+    @Override
+    public TableModel map(IModelList modelList) {
+        String[] columnNames = new String[]{
+            fields.id.name(), fields.fingerprint.name()
+        };
+        Object[][] content = null;
+        if (modelList != null) {
+            content = new Object[modelList.size()][columnNames.length];
+            for (int i = 0; i < modelList.size(); i++) {
+                IModel model = modelList.get(i);
+                if (model instanceof PetrolRefuel_model) {
+                    PetrolRefuel_model pm = (PetrolRefuel_model) model;
+                    int col = 0;
+                    content[i][col++] = pm.getId();
+                    content[i][col++] = pm.getFP();
                 }
-                multi += key + FILTER_COMPARATOR_EQUALS + "'" + value + "'";
             }
-            if (multi != null) {
-                multi += ")";
-            }
-            where += multi;
         }
-        return where;
+        return new DefaultTableModel(content, columnNames);
     }
-    
-    
-    private final String DB_TABLE = "PetrolRefuel";
 
     public enum fields {
-        id, fingerprint, carFingerprint, refuelerPersonFingerprint, refuelDate, pricePerLiter, currencyFingerPrint, refuledLiters,
+        id, fingerprint, refuelDate, pricePerLiter, refuledLiters,
         tripDistanceInKm, absolutDistanceInKm, costsForRefuel,
-        cosumedLitersPer100Km, costsPerKilometer, petrolStation, refilledPetrolType,
-        comment, usedTireTypeFingerprint
+        cosumedLitersPer100Km, costsPerKilometer, petrolStation, comment,
+        refilledPetrolTypeFingerprint, usedTireTypeFingerprint, carFingerprint, refuelerPersonFingerprint, 
+        currencyFingerPrint
     };
     
     //@Override
@@ -95,38 +107,42 @@ public class PetrolRefuelModel_mapper implements ISqliteJdbcModelMapper {
         if (_filter instanceof  PetrolRefuel_modelFilter) {
             PetrolRefuel_modelFilter filter = (PetrolRefuel_modelFilter) _filter;
             //identity
-            PetrolRefuelModel_mapper.addNotNullIntegerWhere(where, fields.id.name(), FILTER_COMPARATOR_EQUALS, filter.getId());
-            PetrolRefuelModel_mapper.addNotNullStringWhere(where, fields.fingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getFP());
+            IModelMapper.addNotNullIntegerWhere(where, fields.id.name(), FILTER_COMPARATOR_EQUALS, filter.getId());
+            IModelMapper.addNotNullStringWhere(where, fields.fingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getFP());
             //fields
             
             //relations
-            PetrolRefuelModel_mapper.addNotNullStringWhere(where, fields.carFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getCarFP());
-            PetrolRefuelModel_mapper.addNotNullStringWhere(where, fields.refuelerPersonFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getRefuelerPersonFP());
-            PetrolRefuelModel_mapper.addNotNullStringWhere(where, fields.currencyFingerPrint.name(), FILTER_COMPARATOR_EQUALS, filter.getCurrencyFP());
-            PetrolRefuelModel_mapper.addNotNullStringWhere(where, fields.usedTireTypeFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getTireTypeFP());
+            IModelMapper.addNotNullStringWhere(where, fields.carFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getCarFP());
+            IModelMapper.addNotNullStringWhere(where, fields.refuelerPersonFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getRefuelerPersonFP());
+            IModelMapper.addNotNullStringWhere(where, fields.currencyFingerPrint.name(), FILTER_COMPARATOR_EQUALS, filter.getCurrencyFP());
+            IModelMapper.addNotNullStringWhere(where, fields.usedTireTypeFingerprint.name(), FILTER_COMPARATOR_EQUALS, filter.getTireTypeFP());
         }
         return null;
     }
     
     @Override
     public String getModelSelectSql(IModelFilter filter) {
-        if (filter instanceof PetrolRefuel_modelFilter) {
+        if (filter == null || filter instanceof PetrolRefuel_modelFilter) {
             return getModelSelectSql((PetrolRefuel_modelFilter) filter);
         }
-        return "SELECT * FROM " + DB_TABLE + sqlWhere(filter);
+        return "SELECT * FROM " + getDatabaseTableName() + StringUtils.defaultString(sqlWhere(filter));
     }
     
     @Override
     public String getModelsSelectSql(IModelFilter filter) {
-        if (filter instanceof PetrolRefuel_modelFilter) {
-            return "SELECT * FROM " + DB_TABLE + sqlWhere(filter);
+        if (filter == null || filter instanceof PetrolRefuel_modelFilter) {
+            return "SELECT * FROM " + getDatabaseTableName() + StringUtils.defaultString(sqlWhere(filter));
         }
         return null;
     }
     
     @Override
-    public PetrolRefuel_model map(ResultSet dbResult) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public PetrolRefuel_model map(ResultSet dbResult) throws SQLException {
+        PetrolRefuel_model model = new PetrolRefuel_model();
+        model.setId(dbResult.getInt(fields.id.name()));
+        model.setFP(dbResult.getString(fields.fingerprint.name()));
+        
+        return model;
     }
 
     @Override

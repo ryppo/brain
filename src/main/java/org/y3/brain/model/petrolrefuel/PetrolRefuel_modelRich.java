@@ -5,7 +5,7 @@ import org.y3.brain.model.currency.Currency_model;
 import org.y3.brain.model.person.Person_model;
 import org.y3.brain.model.petrolstation.PetrolStation_model;
 import org.y3.brain.model.petroltype.PetrolType_model;
-import org.y3.brain.database.tire.TireType_model;
+import org.y3.brain.model.tire.TireType_model;
 
 /** 
  * <p>Title: org.y3.brain.model.petrolrefuel - PetrolRefuel_modelRich</p>
